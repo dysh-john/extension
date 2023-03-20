@@ -1,0 +1,95 @@
+console.log("Extension active now by john");
+
+
+chrome.runtime.onMessage.addListener(gotMsg);
+
+
+
+
+function gotMsg(message, sender, sendResponse){
+    console.log(message.txt);
+
+    if (message.txt === "hello"){
+
+
+
+        /* -------- Start main script -------- */
+
+
+        /* Change url */
+        var currentUrl = location.pathname.split('/');
+        if(currentUrl == ',school,Roll_Call,index_roll_call') {
+            window.open('https://sdms.dysh.tyc.edu.tw/school/Roll_Call/Admin/RC/RC_card?title=%u5237%u5361%u9ede%u540dz');
+        }
+        else{
+
+
+
+            var paragraphs = document.getElementsByTagName("tr");
+            for(var i = 0; i < paragraphs.length; i++)
+            {
+                showText = paragraphs[i].innerText;
+                if(showText.length > 14){
+                    if(showText.length < 50){
+            
+                        showText = showText.replace(/(\n|\t02|\t|\r)/gm, "");
+                        sdtInfo = showText;
+            
+                        /* Start fillter */
+                        /* 未刷卡ver */
+                        if(showText.substr(-8) == "(未到)已到遲到"){
+                            sdtInfo = sdtInfo.slice(0, -4);
+            
+                            /* Edit text */
+                            sdtInfo = sdtInfo.slice(0, -7);
+                            sdtInfo = (sdtInfo+":  未刷卡(未到)")
+            
+                            alert(sdtInfo);
+                        }
+                        /* 遲到ver */
+                        else if(showText.substr(-4) == "未到已到"){
+                            sdtInfo = sdtInfo.slice(0, -4);
+            
+                            /* Edit text */
+                            sdtInfo = sdtInfo.slice(0, -2);
+                            sdtInfo = (sdtInfo+":  遲到")
+            
+                            alert(sdtInfo);
+                        }
+                        /* 未到ver */
+                        else if(showText.substr(-4) == "已到遲到"){
+                            sdtInfo = sdtInfo.slice(0, -4);
+            
+                            /* Edit text */
+                            sdtInfo = sdtInfo.slice(0, -2);
+                            sdtInfo = (sdtInfo+":  未到")
+            
+                            alert(sdtInfo);
+                        }
+    
+                    }
+                    else{
+                        console.log('ErroR... '+showText.length)
+                    }
+                }
+            }
+
+
+
+            alert("Done...");
+
+
+
+        }
+
+
+        
+
+
+        /* -------- Done main script -------- */
+
+
+
+
+    }
+}
