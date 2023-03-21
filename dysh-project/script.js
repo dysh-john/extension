@@ -17,14 +17,17 @@ function gotMsg(message, sender, sendResponse){
 
 
         /* Change url */
-        var currentUrl = location.pathname.split('/');
-        if(currentUrl == ',school,Roll_Call,index_roll_call') {
-            window.open('https://sdms.dysh.tyc.edu.tw/school/Roll_Call/Admin/RC/RC_card?title=%u5237%u5361%u9ede%u540dz');
+        var currentUrl = location.href;
+        var currentDomain = window.location.host;
+
+        var dyshUrl = 'https://sdms.dysh.tyc.edu.tw/school/Roll_Call/Admin/RC/RC_card?title=%u5237%u5361%u9ede%u540dz';
+        var dyshDomain = 'sdms.dysh.tyc.edu.tw';
+
+
+        if(currentUrl != dyshUrl && currentDomain == dyshDomain) {
+            window.open(dyshUrl);
         }
         else{
-
-
-
             var paragraphs = document.getElementsByTagName("tr");
             for(var i = 0; i < paragraphs.length; i++)
             {
@@ -37,7 +40,7 @@ function gotMsg(message, sender, sendResponse){
             
                         /* Start fillter */
                         /* 未刷卡ver */
-                        if(showText.substr(-8) == "(未到)已到遲到"){
+                        if(showText.substr(-11) == "未刷卡(未到)已到遲到"){
                             sdtInfo = sdtInfo.slice(0, -4);
             
                             /* Edit text */
@@ -47,7 +50,7 @@ function gotMsg(message, sender, sendResponse){
                             alert(sdtInfo);
                         }
                         /* 遲到ver */
-                        else if(showText.substr(-4) == "未到已到"){
+                        else if(showText.substr(-6) == "遲到未到已到"){
                             sdtInfo = sdtInfo.slice(0, -4);
             
                             /* Edit text */
@@ -57,7 +60,7 @@ function gotMsg(message, sender, sendResponse){
                             alert(sdtInfo);
                         }
                         /* 未到ver */
-                        else if(showText.substr(-4) == "已到遲到"){
+                        else if(showText.substr(-6) == "未到已到遲到"){
                             sdtInfo = sdtInfo.slice(0, -4);
             
                             /* Edit text */

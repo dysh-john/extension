@@ -12,6 +12,12 @@
                 "js": [ "script.js" ]
             }
         ],
+        "icons": {
+            "16": "logo.png",
+            "32": "logo.png",
+            "48": "logo.png",
+            "128": "logo.png"
+        },
         "background": {
             "service_worker": "background.js"
         },
